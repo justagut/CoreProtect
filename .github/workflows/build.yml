@@ -5,7 +5,7 @@ on:
       - master
   pull_request:
     types: [opened, synchronize, reopened]
-  workflow_dispatch: 
+  workflow_dispatch:
 jobs:
   build:
     name: Build
@@ -22,3 +22,9 @@ jobs:
           cache: 'maven'
       - name: Build
         run: mvn -B verify
+      - name: Store build artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: CoreProtect-build
+          path: target/*.jar
+          if-no-files-found: error
